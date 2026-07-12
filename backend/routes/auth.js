@@ -39,4 +39,42 @@ router.post("/login", async (req, res) => {
   });
 });
 
+// POST /api/auth/signup
+router.post("/signup", async (req, res) => {
+  const { name, email, password } = req.body;
+
+  if (!name || !email || !password)
+    return res.status(400).json({ message: "Name, email and password are required" });
+
+  const existing = await User.findOne({ email: email.toLowerCase() });
+  if (existing)
+    return res.status(409).json({ message: "Email already registered" });
+
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const user = await User.create({
+    name,
+    email: email.toLowerCase(),
+    password: hashedPassword,
+    role: "employee", // always employee on signup
+    status: "Active",
+  });
+
+  const token = jwt.sign(
+    { id: user._id, role: user.role },
+    process.env.JWT_SECRET,
+    { expiresIn: "8h" }
+  );
+
+  res.status(201).json({
+    token,
+    user: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+    },
+  });
+});
+
 module.exports = router;
