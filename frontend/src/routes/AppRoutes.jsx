@@ -11,6 +11,7 @@ import Login from '../pages/Login'
 import Departments from '../pages/Departments'
 import Assets from '../pages/Assets'
 import Allocation from '../pages/Allocation'
+import Bookings from '../pages/Bookings'
 function AppRoutes() {
   return (
     <BrowserRouter>
@@ -22,6 +23,7 @@ function AppRoutes() {
           <Route path="/organization" element={<Departments />} /> 
           <Route path="/assets" element={<Assets />} /> 
           <Route path="/allocation" element={<Allocation />} />
+          <Route path="/bookings" element={<Bookings />} />
         </Route>
 
         <Route path="/" element={<Navigate to="/login" replace />} />

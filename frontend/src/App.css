@@ -481,3 +481,18 @@
   color: #475569;
   background: #e2e8f0;
 }
+.status-badge.pending {
+  color: #b45309;
+  background: #fef3c7;
+}
+
+.status-badge.approved,
+.status-badge.completed {
+  color: #15803d;
+  background: #dcfce7;
+}
+
+.status-badge.rejected {
+  color: #b91c1c;
+  background: #fee2e2;
+}
