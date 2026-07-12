@@ -6,8 +6,16 @@ import {
 } from 'react-router-dom'
 
 import DashboardLayout from '../layouts/DashboardLayout'
+import AdminLayout from '../layouts/AdminLayout'
 import Dashboard from '../pages/Dashboard'
 import Login from '../pages/Login'
+import AdminDashboard from '../pages/AdminDashboard'
+import DepartmentManagement from '../pages/DepartmentManagement'
+import Employees from '../pages/Employees'
+import AssetManagement from '../pages/AssetManagement'
+import AllocationManagement from '../pages/AllocationManagement'
+import AvailableAssets from '../pages/AvailableAssets'
+import AIQuery from '../pages/AIQuery'
 import Departments from '../pages/Departments'
 import Assets from '../pages/Assets'
 import Allocation from '../pages/Allocation'
@@ -20,6 +28,16 @@ function AppRoutes() {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+
+        <Route element={<AdminLayout />}>
+          <Route path="/admin" element={<AdminDashboard />} />
+          <Route path="/admin/departments" element={<DepartmentManagement />} />
+          <Route path="/admin/employees" element={<Employees />} />
+          <Route path="/admin/assets" element={<AssetManagement />} />
+          <Route path="/admin/allocations" element={<AllocationManagement />} />
+          <Route path="/admin/available-assets" element={<AvailableAssets />} />
+          <Route path="/admin/ai" element={<AIQuery />} />
+        </Route>
 
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />

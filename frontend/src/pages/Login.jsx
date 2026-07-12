@@ -24,9 +24,10 @@ function Login() {
       const data = await login(formData.username, formData.password)
       localStorage.setItem('token', data.token)
       localStorage.setItem('role', data.user.role)
+      localStorage.setItem('userName', data.user.name)
       // redirect based on role
       if (data.user.role === 'admin') {
-        window.location.href = '/dashboard'
+        window.location.href = '/admin'
       } else {
         window.location.href = '/dashboard'
       }
