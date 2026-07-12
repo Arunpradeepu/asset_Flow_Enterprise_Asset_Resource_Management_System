@@ -1,14 +1,16 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import '../App.css'
-import api from '../services/api'
+import { login } from '../services/auth'
 
 function Login() {
   const navigate = useNavigate()
+
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   })
+
   const [error, setError] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
@@ -29,17 +31,21 @@ function Login() {
     setIsLoading(true)
 
     try {
-      const response = await api.post('/auth/login', {
-        email: formData.email.trim().toLowerCase(),
-        password: formData.password,
-      })
+      const data = await login(formData.email, formData.password)
 
-      const { token, user } = response.data
-      localStorage.setItem('token', token)
-      localStorage.setItem('user', JSON.stringify(user))
-      navigate('/dashboard')
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('user', JSON.stringify(data.user))
+      localStorage.setItem('role', data.user.role)
+
+      if (data.user.role === 'admin') {
+        navigate('/dashboard')
+      } else if (data.user.role === 'employee') {
+        navigate('/employee')
+      } else {
+        setError('Unknown user role')
+      }
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed. Please try again.')
+      setError(err.message || 'Login failed')
     } finally {
       setIsLoading(false)
     }
@@ -55,7 +61,7 @@ function Login() {
         </div>
 
         <form className="login-form" onSubmit={handleSubmit}>
-          {error ? <p className="error-message">{error}</p> : null}
+          {error && <p className="error-message">{error}</p>}
 
           <div className="form-group">
             <label htmlFor="email">Email</label>
@@ -83,7 +89,11 @@ function Login() {
             />
           </div>
 
-          <button type="submit" className="login-button" disabled={isLoading}>
+          <button
+            type="submit"
+            className="login-button"
+            disabled={isLoading}
+          >
             {isLoading ? 'Signing In...' : 'Sign In'}
           </button>
         </form>
