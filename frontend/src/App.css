@@ -477,3 +477,7 @@
     max-width: none;
   }
 }
+.status-badge.returned {
+  color: #475569;
+  background: #e2e8f0;
+}
