@@ -1,14 +1,16 @@
 import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { signup } from '../services/auth'
 import '../App.css'
-import { login } from '../services/auth'
-import { Link } from 'react-router-dom'
-function Login() {
+
+function Signup() {
   const navigate = useNavigate()
 
   const [formData, setFormData] = useState({
+    name: '',
     email: '',
     password: '',
+    confirmPassword: '',
   })
 
   const [error, setError] = useState('')
@@ -22,30 +24,39 @@ function Login() {
       [name]: value,
     }))
 
-    if (error) setError('')
+    setError('')
   }
 
   const handleSubmit = async (event) => {
     event.preventDefault()
     setError('')
+
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match')
+      return
+    }
+
+    if (formData.password.length < 6) {
+      setError('Password must contain at least 6 characters')
+      return
+    }
+
     setIsLoading(true)
 
     try {
-      const data = await login(formData.email, formData.password)
+      const data = await signup(
+        formData.name,
+        formData.email,
+        formData.password
+      )
 
       localStorage.setItem('token', data.token)
       localStorage.setItem('user', JSON.stringify(data.user))
       localStorage.setItem('role', data.user.role)
 
-      if (data.user.role === 'admin') {
-        navigate('/dashboard')
-      } else if (data.user.role === 'employee') {
-        navigate('/employee/assets')
-      } else {
-        setError('Unknown user role')
-      }
+      navigate('/employee/assets')
     } catch (err) {
-      setError(err.message || 'Login failed')
+      setError(err.message || 'Signup failed')
     } finally {
       setIsLoading(false)
     }
@@ -57,11 +68,24 @@ function Login() {
         <div className="brand">
           <div className="brand-icon">AF</div>
           <h1>AssetFlow</h1>
-          <p>Enterprise Asset & Resource Management</p>
+          <p>Create your employee account</p>
         </div>
 
         <form className="login-form" onSubmit={handleSubmit}>
           {error && <p className="error-message">{error}</p>}
+
+          <div className="form-group">
+            <label htmlFor="name">Full Name</label>
+            <input
+              id="name"
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Enter your full name"
+              required
+            />
+          </div>
 
           <div className="form-group">
             <label htmlFor="email">Email</label>
@@ -84,7 +108,20 @@ function Login() {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              placeholder="Enter your password"
+              placeholder="Enter password"
+              required
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="confirmPassword">Confirm Password</label>
+            <input
+              id="confirmPassword"
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Confirm password"
               required
             />
           </div>
@@ -94,15 +131,16 @@ function Login() {
             className="login-button"
             disabled={isLoading}
           >
-            {isLoading ? 'Signing In...' : 'Sign In'}
+            {isLoading ? 'Creating Account...' : 'Sign Up'}
           </button>
+
           <p className="auth-link">
-  Don't have an account? <Link to="/signup">Create Account</Link>
-</p>
+            Already have an account? <Link to="/">Sign In</Link>
+          </p>
         </form>
       </div>
     </div>
   )
 }
 
-export default Login
+export default Signup
