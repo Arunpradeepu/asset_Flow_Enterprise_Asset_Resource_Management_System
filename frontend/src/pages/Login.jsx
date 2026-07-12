@@ -1,26 +1,38 @@
 import { useState } from 'react'
 import '../App.css'
+import { login } from '../services/auth'
 
 function Login() {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   })
+  const [error, setError] = useState('')
 
   const handleChange = (event) => {
     const { name, value } = event.target
-
     setFormData((previousData) => ({
       ...previousData,
       [name]: value,
     }))
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-
-    // Backend login API will be connected later.
-    console.log('Login submitted:', formData.username)
+    setError('')
+    try {
+      const data = await login(formData.username, formData.password)
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('role', data.user.role)
+      // redirect based on role
+      if (data.user.role === 'admin') {
+        window.location.href = '/dashboard'
+      } else {
+        window.location.href = '/dashboard'
+      }
+    } catch (err) {
+      setError(err.message)
+    }
   }
 
   return (
@@ -59,6 +71,7 @@ function Login() {
             />
           </div>
 
+          {error && <p style={{ color: 'red', marginBottom: '8px' }}>{error}</p>}
           <button type="submit" className="login-button">
             Sign In
           </button>
