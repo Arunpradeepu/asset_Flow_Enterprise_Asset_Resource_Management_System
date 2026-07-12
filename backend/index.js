@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 
 const authRoutes = require("./routes/auth");
+const departmentRoutes = require("./routes/departments");
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.json());
 
 // Routes
 app.use("/api/auth", authRoutes);
+app.use("/api/departments", departmentRoutes);
 
 // Health check
 app.get("/", (req, res) => res.json({ status: "API running" }));
