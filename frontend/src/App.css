@@ -496,3 +496,45 @@
   color: #b91c1c;
   background: #fee2e2;
 }
+.form-grid textarea {
+  min-height: 100px;
+  padding: 11px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  font-family: inherit;
+  resize: vertical;
+}
+
+.priority-badge {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.priority-badge.low {
+  color: #15803d;
+  background: #dcfce7;
+}
+
+.priority-badge.medium {
+  color: #b45309;
+  background: #fef3c7;
+}
+
+.priority-badge.high,
+.priority-badge.critical {
+  color: #b91c1c;
+  background: #fee2e2;
+}
+
+.status-badge.open {
+  color: #2563eb;
+  background: #dbeafe;
+}
+
+.status-badge.in-progress {
+  color: #b45309;
+  background: #fef3c7;
+}
