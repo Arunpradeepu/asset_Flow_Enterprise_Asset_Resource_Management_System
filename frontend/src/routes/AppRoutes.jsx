@@ -9,6 +9,7 @@ import DashboardLayout from '../layouts/DashboardLayout'
 import Dashboard from '../pages/Dashboard'
 import Login from '../pages/Login'
 import Departments from '../pages/Departments'
+import Assets from '../pages/Assets'
 function AppRoutes() {
   return (
     <BrowserRouter>
@@ -17,7 +18,8 @@ function AppRoutes() {
 
         <Route element={<DashboardLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/organization" element={<Departments />} />  
+          <Route path="/organization" element={<Departments />} /> 
+          <Route path="/assets" element={<Assets />} /> 
         </Route>
 
         <Route path="/" element={<Navigate to="/login" replace />} />

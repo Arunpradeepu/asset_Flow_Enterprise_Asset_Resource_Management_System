@@ -432,3 +432,48 @@
     grid-template-columns: 1fr;
   }
 }
+.asset-toolbar {
+  display: flex;
+  gap: 12px;
+  padding: 18px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.asset-toolbar input,
+.asset-toolbar select {
+  padding: 11px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  background: #ffffff;
+  font-size: 14px;
+}
+
+.asset-toolbar input {
+  width: 100%;
+  max-width: 350px;
+}
+
+.status-badge.available {
+  color: #15803d;
+  background: #dcfce7;
+}
+
+.status-badge.allocated {
+  color: #1d4ed8;
+  background: #dbeafe;
+}
+
+.status-badge.maintenance {
+  color: #b45309;
+  background: #fef3c7;
+}
+
+@media (max-width: 700px) {
+  .asset-toolbar {
+    flex-direction: column;
+  }
+
+  .asset-toolbar input {
+    max-width: none;
+  }
+}
