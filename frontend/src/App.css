@@ -267,3 +267,168 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+.organization-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.organization-header h1 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 28px;
+}
+
+.organization-header p {
+  margin: 8px 0 0;
+  color: #64748b;
+}
+
+.primary-button,
+.secondary-button,
+.action-button {
+  border: none;
+  border-radius: 7px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.primary-button {
+  padding: 11px 16px;
+  background: #2563eb;
+  color: white;
+}
+
+.primary-button:hover {
+  background: #1d4ed8;
+}
+
+.secondary-button {
+  padding: 11px 16px;
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.department-form,
+.table-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.department-form {
+  padding: 22px;
+  margin-bottom: 24px;
+}
+
+.department-form h3 {
+  margin-top: 0;
+  color: #0f172a;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.form-grid input,
+.form-grid select,
+.table-toolbar input {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 7px;
+  background: white;
+  font-size: 14px;
+}
+
+.form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.table-toolbar {
+  padding: 18px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.table-toolbar input {
+  max-width: 320px;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.data-table th,
+.data-table td {
+  padding: 15px 18px;
+  text-align: left;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.data-table th {
+  color: #475569;
+  font-size: 13px;
+  background: #f8fafc;
+}
+
+.data-table td {
+  color: #334155;
+  font-size: 14px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-badge.active {
+  color: #15803d;
+  background: #dcfce7;
+}
+
+.status-badge.inactive {
+  color: #b91c1c;
+  background: #fee2e2;
+}
+
+.action-button {
+  padding: 6px 10px;
+  margin-right: 6px;
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.action-button.delete {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.empty-message {
+  text-align: center !important;
+  color: #64748b !important;
+}
+
+@media (max-width: 700px) {
+  .organization-header {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
