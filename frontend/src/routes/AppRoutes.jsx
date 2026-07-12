@@ -7,7 +7,7 @@ import {
 
 import DashboardLayout from '../layouts/DashboardLayout'
 import Dashboard from '../pages/Dashboard'
-import Login from '../pages/Login'
+import Login from '../pages/Login.jsx'
 import Departments from '../pages/Departments'
 import Assets from '../pages/Assets'
 import Allocation from '../pages/Allocation'

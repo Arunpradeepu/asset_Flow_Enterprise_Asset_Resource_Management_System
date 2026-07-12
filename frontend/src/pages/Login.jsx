@@ -1,11 +1,16 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import '../App.css'
+import api from '../services/api'
 
 function Login() {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: '',
   })
+  const [error, setError] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -14,13 +19,30 @@ function Login() {
       ...previousData,
       [name]: value,
     }))
+
+    if (error) setError('')
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
+    setError('')
+    setIsLoading(true)
 
-    // Backend login API will be connected later.
-    console.log('Login submitted:', formData.username)
+    try {
+      const response = await api.post('/auth/login', {
+        email: formData.email.trim().toLowerCase(),
+        password: formData.password,
+      })
+
+      const { token, user } = response.data
+      localStorage.setItem('token', token)
+      localStorage.setItem('user', JSON.stringify(user))
+      navigate('/dashboard')
+    } catch (err) {
+      setError(err.response?.data?.message || 'Login failed. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   return (
@@ -33,15 +55,17 @@ function Login() {
         </div>
 
         <form className="login-form" onSubmit={handleSubmit}>
+          {error ? <p className="error-message">{error}</p> : null}
+
           <div className="form-group">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Email</label>
             <input
-              id="username"
-              type="text"
-              name="username"
-              value={formData.username}
+              id="email"
+              type="email"
+              name="email"
+              value={formData.email}
               onChange={handleChange}
-              placeholder="Enter your username"
+              placeholder="Enter your email"
               required
             />
           </div>
@@ -59,8 +83,8 @@ function Login() {
             />
           </div>
 
-          <button type="submit" className="login-button">
-            Sign In
+          <button type="submit" className="login-button" disabled={isLoading}>
+            {isLoading ? 'Signing In...' : 'Sign In'}
           </button>
         </form>
       </div>
