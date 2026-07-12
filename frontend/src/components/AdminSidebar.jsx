@@ -8,6 +8,7 @@ const menuItems = [
   { label: 'Assets', path: '/admin/assets' },
   { label: 'Allocation', path: '/admin/allocations' },
   { label: 'Available Assets', path: '/admin/available-assets' },
+  { label: 'Requests', path: '/admin/requests' },
   { label: 'AI Questioning', path: '/admin/ai' },
 ]
 

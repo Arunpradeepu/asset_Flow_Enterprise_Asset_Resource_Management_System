@@ -10,6 +10,7 @@ const assetRoutes = require("./routes/assets");
 const allocationRoutes = require("./routes/allocations");
 const statsRoutes = require("./routes/stats");
 const aiRoutes = require("./routes/ai");
+const requestRoutes = require("./routes/requests");
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.use("/api/assets", assetRoutes);
 app.use("/api/allocations", allocationRoutes);
 app.use("/api/stats", statsRoutes);
 app.use("/api/ai", aiRoutes);
+app.use("/api/requests", requestRoutes);
 
 // Health check
 app.get("/", (req, res) => res.json({ status: "API running" }));
